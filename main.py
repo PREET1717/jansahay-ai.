@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+import google.generativeai as genai
 import json
 
 app = FastAPI()
@@ -14,29 +13,40 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load Data
-with open('schemes.json', 'r', encoding='utf-8') as f:
-    schemes_data = json.load(f)
+# Teri API Key set ho gayi hai
+genai.configure(api_key="AQ.Ab8RN6J8VXDHFkVyEY2W2dAzRZHEm2IRpY27fl0DXPJS1kPS2A")
+model = genai.GenerativeModel('gemini-1.5-flash')
 
-# TF-IDF Model Setup
-descriptions = [scheme['description'] + " " + scheme['eligibility'] for scheme in schemes_data]
-vectorizer = TfidfVectorizer()
-tfidf_matrix = vectorizer.fit_transform(descriptions)
+# Load Data
+try:
+    with open('schemes.json', 'r', encoding='utf-8') as f:
+        schemes_data = json.dumps(json.load(f))
+except:
+    schemes_data = "No local data."
 
 @app.get("/search")
 def search_scheme(query: str):
-    # Process Query
-    query_vec = vectorizer.transform([query])
-    similarities = cosine_similarity(query_vec, tfidf_matrix).flatten()
+    # AI ko sikhane ke liye prompt
+    prompt = f"""
+    Tu ek bhartiya sarkari scheme assistant hai jiska naam 'JanSahay AI' hai. 
+    Tere paas ye schemes ki jankari hai: {schemes_data}.
+    Agar user 'hi', 'hello' bole, toh pyaar se Hindi/Hinglish mein baat kar.
+    Agar user kisi scheme ke baare mein puche, toh upar diye data se jawab de, aur agar wahan na ho toh apni knowledge se short mein ekdum badiya jawab de.
+    User ka sawal: {query}
+    """
     
-    best_match_idx = similarities.argmax()
-    best_score = similarities[best_match_idx]
-
-    if best_score > 0.1: # Threshold
-        best_scheme = schemes_data[best_match_idx]
+    try:
+        response = model.generate_content(prompt)
+        ai_reply = response.text
+        
+        # Frontend ke design me fit baithne ke liye format
         return {
-            "best_scheme": best_scheme,
-            "match_score": round(float(best_score), 2)
+            "best_scheme": {
+                "name": "JanSahay AI Jawab:",
+                "description": ai_reply,
+                "eligibility": "Sabhi ke liye"
+            },
+            "match_score": 100
         }
-    else:
-        return {"message": "Maaf karein, isse judi koi scheme nahi mili. Thoda aur detail mein likhein."}
+    except Exception as e:
+        return {"message": "Server abhi busy hai, 1 minute baad try karein."}
