@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "name": "Pradhan Mantri Jan Dhan Yojana (PMJDY)",
+        "description": "Zero balance savings bank account with accidental insurance cover for unbanked citizens.",
+        "eligibility": "Any Indian citizen over 10 years of age without a bank account."
+    },
+    {
+        "id": 2,
+        "name": "Ayushman Bharat Yojana",
+        "description": "Health insurance scheme providing cover of up to ₹5 lakhs per family per year for secondary care and hospitalization.",
+        "eligibility": "Low-income families listed in the SECC database."
+    },
+    {
+        "id": 3,
+        "name": "PM Kisan Samman Nidhi",
+        "description": "Income support of ₹6,000 per year in three equal installments to all landholding farmer families.",
+        "eligibility": "Small and marginal farmers holding cultivable land."
+    },
+    {
+        "id": 4,
+        "name": "Sukanya Samriddhi Yojana",
+        "description": "A government-backed savings scheme for the parents of a girl child to build a fund for her future education and marriage.",
+        "eligibility": "Parents or legal guardians of a girl child below 10 years of age."
+    },
+    {
+        "id": 5,
+        "name": "Pradhan Mantri Mudra Yojana (PMMY)",
+        "description": "Provides business loans up to ₹10 lakhs for non-corporate, non-farm small and micro enterprises to start or expand business.",
+        "eligibility": "Any Indian citizen with a business plan for an income-generating activity."
+    },
+    {
+        "id": 6,
+        "name": "Digital India Internship Scheme",
+        "description": "Provides practical experience, stipend, and exposure to college students in the field of e-governance and Information Technology.",
+        "eligibility": "College students pursuing undergraduate or postgraduate degrees in relevant fields."
+    },
+    {
+        "id": 7,
+        "name": "National Social Assistance Programme (NSAP) / Old Age Pension",
+        "description": "Provides financial assistance and monthly pension to the elderly, widows, and persons with disabilities.",
+        "eligibility": "Senior citizens (60+ years), widows, and disabled individuals from Below Poverty Line (BPL) families."
+    },
+    {
+        "id": 8,
+        "name": "Pradhan Mantri Awas Yojana (PMAY)",
+        "description": "Provides affordable housing and financial assistance (subsidy on home loans) to the urban and rural poor to build their own houses.",
+        "eligibility": "Economically Weaker Section (EWS), Low Income Groups (LIG), and people without a pucca house."
+    },
+    {
+        "id": 9,
+        "name": "Pradhan Mantri Ujjwala Yojana (PMUY)",
+        "description": "Provides free LPG gas connections to women from Below Poverty Line (BPL) households to ensure smokeless kitchens.",
+        "eligibility": "Adult women belonging to BPL families without an existing LPG connection."
+    },
+    {
+        "id": 10,
+        "name": "PM SVANidhi Yojana",
+        "description": "A special micro-credit facility providing affordable loans up to ₹10,000 to street vendors to resume their livelihoods.",
+        "eligibility": "Street vendors, hawkers, and people selling goods on footpaths or carts."
+    },
+    {
+        "id": 11,
+        "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+        "description": "Crop insurance scheme that provides financial support to farmers in the event of crop failure or damage due to natural calamities.",
+        "eligibility": "All farmers including sharecroppers and tenant farmers growing notified crops."
+    },
+    {
+        "id": 12,
+        "name": "Atal Pension Yojana (APY)",
+        "description": "A pension scheme for workers in the unorganized sector, providing a guaranteed minimum monthly pension of ₹1,000 to ₹5,000 after age 60.",
+        "eligibility": "Indian citizens between 18 and 40 years of age with a bank account."
+    },
+    {
+        "id": 13,
+        "name": "Stand-Up India Scheme",
+        "description": "Facilitates bank loans between ₹10 lakh and ₹1 crore for setting up a greenfield enterprise in manufacturing, services, or trading.",
+        "eligibility": "Women entrepreneurs, and individuals belonging to SC or ST categories above 18 years."
+    },
+    {
+        "id": 14,
+        "name": "PM Vishwakarma Yojana",
+        "description": "Provides financial assistance, skill training, and modern tools to traditional artisans and craftspeople like carpenters, goldsmiths, and blacksmiths.",
+        "eligibility": "Traditional artisans and craftspeople working with their hands and tools."
+    },
+    {
+        "id": 15,
+        "name": "Beti Bachao Beti Padhao",
+        "description": "A campaign to generate awareness and improve the efficiency of welfare services intended for girls, focusing on education and survival.",
+        "eligibility": "Families with girl children in selected districts with low Child Sex Ratio."
+    }
+]
