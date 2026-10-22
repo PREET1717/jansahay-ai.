@@ -207,7 +207,8 @@
             loader.style.display = "block";
 
             try {
-                let response = await fetch("http://127.0.0.1:8000/search?query=" + query);
+                // YAHAN MAINE TERA NAYA RENDER LINK DAAL DIYA HAI 👇
+                let response = await fetch("https://jansahay-ai-qelw.onrender.com/search?query=" + query);
                 let data = await response.json();
 
                 // Loader chhupao
@@ -227,7 +228,7 @@
                 }
             } catch (error) {
                 loader.style.display = "none";
-                resultDiv.innerHTML = `<p style="color: #ff4757; font-weight: bold;">Backend se connect nahi ho paya. Server terminal mein chal raha hai na?</p>`;
+                resultDiv.innerHTML = `<p style="color: #ff4757; font-weight: bold;">Backend se connect nahi ho paya. Ek baar check kar internet chal raha hai ya nahi.</p>`;
                 resultDiv.classList.add("show");
             }
         }
