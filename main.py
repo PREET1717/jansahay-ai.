@@ -1,64 +1,42 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 import json
-from sentence_transformers import SentenceTransformer, util
-from deep_translator import GoogleTranslator
 
-app = FastAPI(title="JanSahay AI")
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], 
+    allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-with open("schemes.json", "r") as f:
+# Load Data
+with open('schemes.json', 'r', encoding='utf-8') as f:
     schemes_data = json.load(f)
 
-print("AI Model load ho raha hai, thoda wait kar bhai...")
-model = SentenceTransformer('all-MiniLM-L6-v2')
-
-scheme_descriptions = [scheme["description"] for scheme in schemes_data]
-scheme_embeddings = model.encode(scheme_descriptions)
-print("Model aur Data dono ready hain! Server start ho gaya.")
-
-@app.get("/")
-def home():
-    return {"status": "success", "message": "JanSahay AI Backend makhan chal raha hai!"}
-
-@app.get("/schemes")
-def get_schemes():
-    return {"total_schemes": len(schemes_data), "data": schemes_data}
+# TF-IDF Model Setup
+descriptions = [scheme['description'] + " " + scheme['eligibility'] for scheme in schemes_data]
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(descriptions)
 
 @app.get("/search")
-def search_schemes(query: str):
-    try:
-        translated_query = GoogleTranslator(source='auto', target='en').translate(query)
-    except Exception as e:
-        print(f"Translation Error: {e}")
-        translated_query = query 
-        
-    query_embedding = model.encode(translated_query)
-    results = util.cos_sim(query_embedding, scheme_embeddings)
+def search_scheme(query: str):
+    # Process Query
+    query_vec = vectorizer.transform([query])
+    similarities = cosine_similarity(query_vec, tfidf_matrix).flatten()
     
-    best_match_index = results.argmax().item()
-    best_score = results[0][best_match_index].item()
-    
-    # Terminal mein check karne ke liye ki AI kya kar raha hai
-    print("----- NAYA SEARCH -----")
-    print(f"Original: {query}")
-    print(f"Translated: {translated_query}")
-    print(f"Top Scheme Match Score: {best_score}")
-    print("-----------------------")
-    
-    # Limit ko 0.25 se hata kar 0.15 kar diya hai
-    if best_score > 0.15:
+    best_match_idx = similarities.argmax()
+    best_score = similarities[best_match_idx]
+
+    if best_score > 0.1: # Threshold
+        best_scheme = schemes_data[best_match_idx]
         return {
-            "query": query,
-            "translated_query": translated_query,
-            "match_score": round(best_score, 2),
-            "best_scheme": schemes_data[best_match_index]
+            "best_scheme": best_scheme,
+            "match_score": round(float(best_score), 2)
         }
     else:
-        return {"message": "Sorry bhai, isse related abhi koi scheme nahi mili."}
+        return {"message": "Maaf karein, isse judi koi scheme nahi mili. Thoda aur detail mein likhein."}
